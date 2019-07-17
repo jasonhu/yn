@@ -6,7 +6,7 @@ const bodyParser = require('koa-body')
 const static = require('koa-static')
 const mime = require('mime')
 const request = require('request')
-const pty = require('node-pty')
+// const pty = require('node-pty')
 
 const file = require('./file')
 const dataRepository = require('./repository')
@@ -194,20 +194,20 @@ const port = 3000
 const server = require('http').createServer(app.callback())
 const io = require('socket.io')(server, {path: '/ws'})
 
-io.on('connection', socket => {
-    const ptyProcess = pty.spawn(os.platform() === 'win32' ? 'cmd.exe' : 'bash', [], {
-        name: 'xterm-color',
-        cols: 80,
-        rows: 24,
-        cwd: path.join(__dirname, '../'),
-        env: process.env
-    })
-    ptyProcess.on('data', data => socket.emit('output', data))
-    ptyProcess.on('exit', () => socket.disconnect())
-    socket.on('input', data => ptyProcess.write(data))
-    socket.on('resize', size => ptyProcess.resize(size[0], size[1]))
-    socket.on('disconnect', () => ptyProcess.destroy())
-})
+// io.on('connection', socket => {
+//     const ptyProcess = pty.spawn(os.platform() === 'win32' ? 'cmd.exe' : 'bash', [], {
+//         name: 'xterm-color',
+//         cols: 80,
+//         rows: 24,
+//         cwd: path.join(__dirname, '../'),
+//         env: process.env
+//     })
+//     ptyProcess.on('data', data => socket.emit('output', data))
+//     ptyProcess.on('exit', () => socket.disconnect())
+//     socket.on('input', data => ptyProcess.write(data))
+//     socket.on('resize', size => ptyProcess.resize(size[0], size[1]))
+//     socket.on('disconnect', () => ptyProcess.destroy())
+// })
 
 server.listen(port)
 
