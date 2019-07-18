@@ -172,7 +172,9 @@ export default {
 
       const basePath = this.filePath.substr(0, this.filePath.lastIndexOf('/'))
       const repo = this.fileRepo
-      return md.replace(/\[([^\]]*)\]\(\.\/([^)]*)\/([^)/]+)\)/g, `[$1](api/attachment/$3?repo=${repo}&path=${encodeURI(basePath)}%2F$2%2F$3)`)
+      // return md.replace(/\[([^\]]*)\]\(\.\/([^)]*)\/([^)/]+)\)/g, `[$1](api/attachment/$3?repo=${repo}&path=${encodeURI(basePath)}%2F$2%2F$3)`)
+      // 匹配规则，排除带冒号的绝对路径
+      return md.replace(/!\[([^\]]*)\]\(([^)][^(:)]*)\)/g, `![$1](api/attachment/x.png?repo=${repo}&path=${encodeURI(basePath)}%2F$2)`)
     },
     updatePlantuml () {
       const nodes = this.$refs.view.querySelectorAll('img[data-plantuml-src]')
