@@ -16,6 +16,7 @@
 6. 在文档中运行 PHP Python Node.js bash 代码块
 
 ## 上手使用
++ 使用容器来安装：[docker-readme.md](docker-readme.md)
 + 安装
     ```bash
     # 安装前端
